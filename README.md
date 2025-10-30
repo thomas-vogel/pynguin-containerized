@@ -2,9 +2,9 @@
 
 ## Overview
 
-The container is an Apptainer sandbox, which is a read-write container within a directory structure. The container is a writable directory, in which programs can be installed after building the container. 
+The container is an [Apptainer](https://apptainer.org/) sandbox, which is a read-write container within a directory structure. The container is a writable directory, in which programs can be installed after building the container. 
 
-The container hosts the Pynguin source code and installation, and the Python environment to run Pynguin. The host system provides a directory, which is mounted to the container. This directory contains the Python modules under test and Pynguin writes the test results and reports to it.
+The container hosts the [Pynguin](https://github.com/se2p/pynguin) source code and installation, and the Python environment to run Pynguin. The host system provides a directory, which is mounted to the container. This directory contains the Python modules under test and Pynguin writes the test results and reports to it.
 
 ## Instructions
 
