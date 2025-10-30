@@ -1,0 +1,50 @@
+# Def file for building an Apptainer container for Pynguin development
+# The Apptainer is based on a Docker image with the required Python version
+
+Bootstrap: docker
+From: python:{{ PYTHON_VERSION }}
+Stage: build
+
+%arguments
+    # Pynguin requires Python 3.10
+    PYTHON_VERSION=3.10
+    
+    # Git URL of the Pynguin repository
+    PYNGUIN_GIT_URL=https://github.com/se2p/pynguin.git
+    
+    # Directory where the Pynguin development environment is set up
+    PYNGUIN_DEV=/home/pynguin-dev
+    
+    # Directory where the subjects and test results are stored
+    PYNGUIN_DATA=/mnt/pynguin-data
+    
+    # Directory where Poetry will create virtual environments
+    VIRTUALENVS_HOME={{PYNGUIN_DEV}}/virtualenvs
+
+%environment
+    # to enable running Pynguin -- we are aware of the dangers
+    export PYNGUIN_DANGER_AWARE="yes_I_know"
+
+%post
+    # install helpful tools
+    apt-get update && apt-get install -y nano tree
+
+    # create Pynguin data folder to which a directory from the host system will be mounted
+    mkdir -p {{PYNGUIN_DATA}}
+
+    # create Pynguin dev folder only visible inside the container
+    mkdir -p {{PYNGUIN_DEV}}
+    
+    # clone Pynguin repo into home folder
+    cd {{PYNGUIN_DEV}}
+    git clone {{PYNGUIN_GIT_URL}}
+    
+    # install poetry required by Pynguin
+    pip install poetry
+    # configure poetry where to store the virtual environments
+    poetry config virtualenvs.path {{VIRTUALENVS_HOME}}
+
+    # install Pynguin with OpenAI support   
+    cd pynguin
+    poetry install --with openai    
+
