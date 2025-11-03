@@ -12,6 +12,8 @@ The container hosts the PYthoN General UnIt test geNerator ([Pynguin](https://gi
 
  2. Build the Apptainer 
  
+    **Configure**
+    
     The Apptainer is defined by `pynguin-dev-apptainer.def`, which has several parameters whose values can be changed if needed:
     
     1. `PYTHON_VERSION=3.10`: Pynguin currently requires Python 3.10.
@@ -22,7 +24,7 @@ The container hosts the PYthoN General UnIt test geNerator ([Pynguin](https://gi
 
     Additionally, when building the Apptainer, further tools can be installed such as `nano`. Have a look at the definition file and add the tools to install via `apt-get`.
 
-    **Build the Apptainer**
+    **Build**
 
     In the host system's directory containing the definition file: 
 
